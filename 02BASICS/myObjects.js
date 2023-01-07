@@ -1,18 +1,11 @@
 "use strict";
+// const user = {
+//     name: "Janet", 
+//     email: "janet@gmail.com",
+//     isActive: true
+// };
 exports.__esModule = true;
-var user = {
-    name: "Janet",
-    email: "janet@gmail.com",
-    isActive: true
-};
-function createUser(_a) {
-    var string = _a.name, boolean = _a.isPaid;
+function createUser(user) {
+    return { name: "", email: "", isActive: true };
 }
-;
-// Weird behaviour
-var newUser = { name: "Jane", isPaid: true, email: "J@J.com" };
-createUser(newUser);
-function createCourse() {
-    return { name: "Adebola", price: 5000 };
-}
-;
+createUser({ name: "", email: "", isActive: true });
