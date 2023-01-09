@@ -21,3 +21,18 @@ function getDbId(id) {
         return id.toPrecision();
 }
 ;
+// array
+var data = [1, 2, 3];
+var data2 = ["1", "2", "3"];
+// This will cause a  mismatch cos it means all as numbers or all as strings, the inputs cannot be mixed
+var data3 = ["1", "2", "3"];
+// This is how to do it, when making an array of more than two types
+var data4 = [1, "2", 3, "4"];
+// You can make a number strict also
+var pi = 3.14;
+// Can't do this
+// pi = 4.98
+// Use case: An airplane seat for instance
+var seatAllotment = 'middle';
+seatAllotment = 'aisle';
+seatAllotment = 'window';
