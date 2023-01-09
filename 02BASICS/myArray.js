@@ -4,6 +4,10 @@ var superHeros = [];
 // const heroPower: number[] = []
 var heroPower = [];
 var allUsers = [];
+var MLModels = [
+    [10, 21, 15],
+    [14, 45, 54]
+];
 superHeros.push("spiderman");
 heroPower.push(2);
 allUsers.push({
