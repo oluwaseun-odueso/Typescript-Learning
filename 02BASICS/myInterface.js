@@ -3,6 +3,9 @@ var juliet = {
     dbId: 11,
     email: "juliet@gmail.com",
     userId: 22,
+    // The fields of the interface does not have to come accordingly
+    role: "admin",
+    gitHubToken: "token",
     startTrial: function () {
         return "trial started";
     },
@@ -11,4 +14,3 @@ var juliet = {
     }
 };
 juliet.email = 'jul@gmail.com';
-console.log(juliet);

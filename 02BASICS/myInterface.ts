@@ -8,10 +8,22 @@ interface User {
     getCoupon(couponName: string, value: number): number
 };
 
-const juliet: User = {
+interface User {
+    gitHubToken: string
+}
+
+// Interface Inheritance
+interface Admin extends User {
+    role: "admin" | "employer" | "employee"
+}
+
+const juliet: Admin = {
     dbId: 11,
     email: "juliet@gmail.com",
     userId: 22,
+    // The fields of the interface does not have to come accordingly
+    role: "admin",
+    gitHubToken: "token",
     startTrial: () => {
         return "trial started"
     },
@@ -21,4 +33,3 @@ const juliet: User = {
 };
 
 juliet.email = 'jul@gmail.com'
-console.log(juliet)
