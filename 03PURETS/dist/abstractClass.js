@@ -25,6 +25,7 @@ class Instagram extends TakePhoto {
     getSepia() {
         console.log("This is Sepia");
     }
+    // If methods in super class are not abstract methods, they can be overwritten
     getReels() {
         return 10;
     }
