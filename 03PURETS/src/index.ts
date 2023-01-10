@@ -13,7 +13,8 @@
 // A class can also be written concisely as this
 class User {
 
-    private _courseCount = 1;
+    // A protected field can be accessed in an inherited class but not directly in an instance or outside the class
+    protected _courseCount = 1;
     readonly city: string = "Lagos";
 
     constructor(
@@ -26,6 +27,7 @@ class User {
         console.log("Token deleted.")
     }
 
+    // ACCESS MODIFIERS
     // Getters in Typescript
     get getAppleEmail(): string {
         return `apple ${this.email}`;
@@ -45,6 +47,16 @@ class User {
         this._courseCount = courseNum;
     };
 }
+
+// Inherited class(User)
+class subUser extends User {
+    isFamily: boolean = true;
+    changeCourseCount() {
+        this._courseCount = 4;
+    };
+};
+
+// Private fields cannot be accessed in inherited classes
 
 
 const justice = new User("justice@g.com", "Justice", 1);

@@ -16,6 +16,7 @@ class User {
         this.email = email;
         this.name = name;
         this.userId = userId;
+        // A protected field can be accessed in an inherited class but not directly in an instance or outside the class
         this._courseCount = 1;
         this.city = "Lagos";
     }
@@ -24,6 +25,7 @@ class User {
     deleteToken() {
         console.log("Token deleted.");
     }
+    // ACCESS MODIFIERS
     // Getters in Typescript
     get getAppleEmail() {
         return `apple ${this.email}`;
@@ -45,5 +47,18 @@ class User {
     }
     ;
 }
+// Inherited class(User)
+class subUser extends User {
+    constructor() {
+        super(...arguments);
+        this.isFamily = true;
+    }
+    changeCourseCount() {
+        this._courseCount = 4;
+    }
+    ;
+}
+;
+// Private fields cannot be accessed in inherited classes
 const justice = new User("justice@g.com", "Justice", 1);
 // justice.city = "Justi"
