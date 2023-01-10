@@ -51,3 +51,15 @@ anotherFunction(3, {
     username: "Timpel",
     password: "Timpel"
 });
+;
+;
+class Sellable {
+    constructor() {
+        this.cart = [];
+    }
+    addToCart(product) {
+        this.cart.push(product);
+    }
+    ;
+}
+;
