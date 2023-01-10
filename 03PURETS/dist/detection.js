@@ -33,3 +33,9 @@ function printAll(strs) {
     ;
 }
 ;
+function isAdminForAccount(account) {
+    if ("isAdmin" in account) {
+        return account.isAdmin;
+    }
+    ;
+}
