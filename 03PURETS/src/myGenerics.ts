@@ -31,7 +31,7 @@ function identityFive<Baller>(val: Baller): Baller {
 
 // Generics in array
 // This returns one of the values of the array
-function getSearchProducts<T>(products: T[]): T {
+function getSearchProducts <T> (products: T[]): T {
     // Do some database operations
     const myIndex = 4;
     return products[myIndex];
@@ -39,8 +39,30 @@ function getSearchProducts<T>(products: T[]): T {
 
 // Generics in array and arrow functions
 // A comma can be after the type to show it is not some html or JSX syntax
-const getSearchProducts2 = <T,>(products: T[]): T => {
+const getSearchProducts2 = <T,> (products: T[]): T => {
     // Do some database operations
     const myIndex = 2;
     return products[myIndex];
 };
+
+// Generics for more than one type
+// Generics with extends keyword
+interface Database {
+    connection: string, 
+    username: string, 
+    password: string
+};
+
+function anotherFunction <T, U extends Database> (valueOne: T, valueTwo: U): object {
+    return {
+        valueOne,
+        valueTwo
+    };
+};
+
+anotherFunction(3, {
+    connection: "strong",
+    username: "Timpel",
+    password: "Timpel"
+});
+

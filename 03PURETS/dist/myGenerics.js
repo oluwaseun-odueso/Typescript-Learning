@@ -38,3 +38,16 @@ const getSearchProducts2 = (products) => {
     const myIndex = 2;
     return products[myIndex];
 };
+;
+function anotherFunction(valueOne, valueTwo) {
+    return {
+        valueOne,
+        valueTwo
+    };
+}
+;
+anotherFunction(3, {
+    connection: "strong",
+    username: "Timpel",
+    password: "Timpel"
+});
