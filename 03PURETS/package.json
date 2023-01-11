@@ -7,5 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Oluwaseun Odueso",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  }
 }
