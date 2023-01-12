@@ -48,3 +48,16 @@ class Polygon {
         return area;
     };
 };
+
+function main () {
+    const polygon1 = new Polygon();
+    const polygon2 = new Polygon (6, 4);
+    const polygon3 = new Polygon(10, 4, 5.6, 7.8)
+
+    console.log("The perimeter and area of Polygon1 are", polygon1.getPerimeter(), "and", polygon1.getArea(), "respectively.")
+    console.log("The perimeter and area of Polygon2 are", polygon2.getPerimeter(), "and", polygon2.getArea(), "respectively.")
+    console.log("The perimeter and area of Polygon3 are", polygon3.getPerimeter(), "and", polygon3.getArea(), "respectively.")
+
+}
+
+main()
