@@ -47,7 +47,7 @@ function emirp(numberOfEmirps) {
 ;
 const main = () => {
     console.log("The first 100 emirps are: ");
-    // console.log();
+    console.log();
     emirp(100);
 };
 main();
