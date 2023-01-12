@@ -1,4 +1,4 @@
-import {NoParamCallback, readFile, writeFile} from 'fs'
+import {readFile, writeFile} from 'fs'
 
 // Post Interface
 interface PostInterface {
@@ -6,6 +6,12 @@ interface PostInterface {
     title: string,
     body: string,
     commentId?: number
+}
+
+// Post update interface
+interface postUpdateInterface {
+    title: string,
+    body: string
 }
 
 // Comments Interface
@@ -24,21 +30,13 @@ const enum FoulLanguages {
     useless
 }
 
-// const writeeData = (filename, obj) => {
-//     return new Promise((resolve, reject) => {
-//         const newObj = JSON.stringify(obj)
-//         writeFile(filename, newObj, (err, data) => {
-//             if (err) throw err;
-//         })
-//     })
-// }
-
 class Posts {
     constructor (
         public details: PostInterface
     ) {};
-
-    async setPost (filename: string, details: object) {
+    
+    // Write data
+    async writeData (filename: string, details: PostInterface) {
         try {
             const newObj: string = JSON.stringify(details);
             writeFile(filename, newObj, (err) => {
@@ -49,7 +47,8 @@ class Posts {
         }
     }
 
-    async getPost (filename: string) {
+    // Read data
+    async readData (filename: string) {
         try {
            readFile(filename, 'utf8', (err, data) => {
             if (err) throw err
@@ -62,26 +61,63 @@ class Posts {
         }
     }
     
-    // get post(): PostInterface {
-    //     // return this.details;
+    // get post
+    async getPost (id: number) {
+        try {
+            const posts = await this.readData('./posts.txt');
+            for (let i = 0; i < posts.length; i++) {
+                if (id == posts[i].id) {
+                    return (posts[i]);
+                };
+            };
+        } catch (error) {
+            throw error
+        }
+    }
 
-    //     return new Promise((resolve, reject) => {
-    //         readFile(filename, 'utf8', (err, data) => {
-    //             if (err) throw err;
+    async setPost (details: PostInterface): Promise<string> {
+        try {
+            await this.writeData('./posts.txt', details)
+            return "Post uploaded successfully"
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async checkId(id: number) {
+        try {
+            // const data: PostInterface[] = []
+            const data = await this.readData('./posts.txt');
+            for (let i = 0; i < data.length; i++) {
+                if (id == data[i].id) {
+                    return true
+                }
+            }
+        } catch (error) {
+            throw error
+        }
+    }
     
-    //             const a = JSON.parse(data);
-    //             resolve(a);
-    //             reject(new Error)
-    //         })  
-    //     })
-    // };
+    async updatePost(id: number, details: postUpdateInterface) {
+        // const checkId = await this.checkId(id);
+        switch(await this.checkId(id)) {
+            case true:
+                return ""
+            case undefined:
+                return "Post does not exist"
+        }
 
-    updatePost(details: PostInterface): PostInterface {
-        this.details = details;
-        return details;
+        // return details;
     };
 
-    deletePost(id: number): string {
+    async deletePost(id: number) {
+        const checkId = await this.checkId(id);
+        if (checkId == true) {
+            // Delete post
+        } else {
+            return "Post does not exist"
+        }
+
         return `Post with id ${id} has been deleted`;
     };
 };

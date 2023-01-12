@@ -1,7 +1,7 @@
 interface User {
     readonly dbId: number,
     email: string,
-    userId: number,
+    userId2: number,
     googleId?: string,
     // startTrail: () => string
     startTrial(): string,
@@ -20,7 +20,7 @@ interface Admin extends User {
 const juliet: Admin = {
     dbId: 11,
     email: "juliet@gmail.com",
-    userId: 22,
+    userId2: 22,
     // The fields of the interface does not have to come accordingly
     role: "admin",
     gitHubToken: "token",
@@ -33,3 +33,5 @@ const juliet: Admin = {
 };
 
 juliet.email = 'jul@gmail.com'
+
+export {}
