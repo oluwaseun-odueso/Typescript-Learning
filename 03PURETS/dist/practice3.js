@@ -58,3 +58,6 @@ class Fan {
     ;
 }
 ;
+const fan1 = new Fan(3, true, 10, "yellow");
+console.log(fan1.fanSpeed);
+console.log(fan1.fanRadius);
