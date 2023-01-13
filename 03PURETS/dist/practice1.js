@@ -17,8 +17,8 @@ class Post {
     ;
     // Write data
     writeData(filename, details) {
-        const newObj = JSON.stringify([details]);
-        (0, fs_1.writeFile)(filename, newObj, (err) => {
+        const newObj = JSON.stringify(details);
+        (0, fs_1.writeFile)(filename, newObj, { flag: 'a' }, (err) => {
             if (err)
                 throw err;
         });
@@ -49,18 +49,11 @@ class Post {
         ;
         return "Post does not exist";
     }
+    ;
     // Create new post
     createNewPost() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                this.writeData('./posts.txt', this.details);
-                return "Post uploaded successfully";
-            }
-            catch (error) {
-                throw error;
-            }
-            ;
-        });
+        this.writeData('./posts.txt', this.details);
+        return "Post uploaded successfully";
     }
     ;
     // Check if post exists
@@ -130,6 +123,10 @@ class Post {
     ;
 }
 ;
+// const thisObj: { name: string, age: number} = {name: "Tim", age: 17};
+// const newThisObj = [thisObj]
+// newThisObj.push({name: "Zic", age: 15})
+// console.log(newThisObj)
 const post1 = new Post({
     id: 1,
     title: "My new post",
@@ -143,12 +140,12 @@ post1.writeData('./posts.txt', {
     body: "A summary of my Career Development in 2022",
     commentId: 1
 });
-post1.writeData('./posts.txt', {
-    id: 1,
-    title: "My second new post",
-    body: "A summary of my Career Development in 2022 Part Two",
-    commentId: 1
-});
+// post1.writeData('./posts.txt', {
+//     id: 1,
+//     title: "My second new post",
+//     body: "A summary of my Career Development in 2022 Part Two",
+//     commentId: 1
+// });
 post1.readData('./posts.txt');
 // post1.updatePost(1, 
 //     {title: "My Latest Post", body: "This is my latest post"}

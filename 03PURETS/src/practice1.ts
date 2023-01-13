@@ -37,8 +37,8 @@ class Post {
     
     // Write data
     writeData (filename: string, details: PostInterface) {
-        const newObj: string = JSON.stringify([details]);
-        writeFile(filename, newObj, (err) => {
+        const newObj: string = JSON.stringify(details);
+        writeFile(filename, newObj, {flag: 'a'}, (err) => {
             if (err) throw err
         })
     };
@@ -65,14 +65,11 @@ class Post {
                 };
             };
             return "Post does not exist";
-    }
+    };
         
     // Create new post
     createNewPost () {
-        let currentData = this.readData('./posts.txt')
-        currentData.push(this.details)
-        this.writeData('./posts.txt', currentData)
-        
+        this.writeData('./posts.txt', this.details);
         return "Post uploaded successfully";
     };
 
@@ -123,6 +120,11 @@ class Post {
         };
     };
 };
+
+// const thisObj: { name: string, age: number} = {name: "Tim", age: 17};
+// const newThisObj = [thisObj]
+// newThisObj.push({name: "Zic", age: 15})
+// console.log(newThisObj)
 
 const post1 = new Post({
     id: 1,
