@@ -32,12 +32,12 @@ const enum FoulLanguages {
 
 class Post {
     constructor (
-        public details: PostInterface
+        private details: PostInterface
     ) {};
     
     // Write data
     writeData (filename: string, details: PostInterface) {
-        const newObj: string = JSON.stringify(details);
+        const newObj: string = JSON.stringify([details]);
         writeFile(filename, newObj, (err) => {
             if (err) throw err
         })
@@ -46,49 +46,34 @@ class Post {
     // Read data
     readData (filename: string): any {
         readFile(filename, 'utf8', (err, data) => {
-        if (err) throw err;
+            if (err) throw err;
 
-        const postData = JSON.parse(data);
-        return postData;
+            const postData = JSON.parse(data);
+            console.log(postData)
+            return postData;
         });
     };
     
     // Get a post
-    async getPost (id: number) {
-        try {
-            const posts = await this.readData('./posts.txt');
+    getPost (id: number) {
+        const posts = this.readData('./posts.txt');
             console.log('a')
             console.log(posts)
             for (let i = 0; i < posts.length; i++) {
                 if (id == posts[i].id) {
                     return (posts[i]);
-                } return "Post does not exist";
+                };
             };
-        } catch (error) {
-            throw error
-        }
+            return "Post does not exist";
+    }
         
-
-        // try {
-            // const posts = await this.readData('./posts.txt');
-            // for (let i = 0; i < posts.length; i++) {
-            //     if (id == posts[i].id) {
-            //         return (posts[i]);
-            //     } return "Post does not exist";
-            // };
-        // } catch (error) {
-        //     throw error;
-        // };
-    };
-    
     // Create new post
-    async createNewPost (): Promise<string> {
-        try {
-            this.writeData('./posts.txt', this.details)
-            return "Post uploaded successfully";
-        } catch (error) {
-            throw error;
-        };
+    createNewPost () {
+        let currentData = this.readData('./posts.txt')
+        currentData.push(this.details)
+        this.writeData('./posts.txt', currentData)
+        
+        return "Post uploaded successfully";
     };
 
     // Check if post exists
@@ -145,6 +130,24 @@ const post1 = new Post({
     body: "A summary of my Career Development in 2022",
     commentId: 1
 })
-const createNew = post1.createNewPost();
-const getNew = post1.getPost(1)
-console.log(getNew)
+// const createNew = post1.createNewPost();
+post1.writeData('./posts.txt', {
+    id: 1,
+    title: "My new post",
+    body: "A summary of my Career Development in 2022",
+    commentId: 1
+});
+post1.writeData('./posts.txt', {
+    id: 1,
+    title: "My second new post",
+    body: "A summary of my Career Development in 2022 Part Two",
+    commentId: 1
+});
+post1.readData('./posts.txt');
+
+
+// post1.updatePost(1, 
+//     {title: "My Latest Post", body: "This is my latest post"}
+//     )
+// const getNew = post1.getPost(1)
+// console.log(getNew)

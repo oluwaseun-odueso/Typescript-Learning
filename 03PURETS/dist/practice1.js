@@ -17,7 +17,7 @@ class Post {
     ;
     // Write data
     writeData(filename, details) {
-        const newObj = JSON.stringify(details);
+        const newObj = JSON.stringify([details]);
         (0, fs_1.writeFile)(filename, newObj, (err) => {
             if (err)
                 throw err;
@@ -30,41 +30,25 @@ class Post {
             if (err)
                 throw err;
             const postData = JSON.parse(data);
+            console.log(postData);
             return postData;
         });
     }
     ;
     // Get a post
     getPost(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const posts = yield this.readData('./posts.txt');
-                console.log('a');
-                console.log(posts);
-                for (let i = 0; i < posts.length; i++) {
-                    if (id == posts[i].id) {
-                        return (posts[i]);
-                    }
-                    return "Post does not exist";
-                }
-                ;
+        const posts = this.readData('./posts.txt');
+        console.log('a');
+        console.log(posts);
+        for (let i = 0; i < posts.length; i++) {
+            if (id == posts[i].id) {
+                return (posts[i]);
             }
-            catch (error) {
-                throw error;
-            }
-            // try {
-            // const posts = await this.readData('./posts.txt');
-            // for (let i = 0; i < posts.length; i++) {
-            //     if (id == posts[i].id) {
-            //         return (posts[i]);
-            //     } return "Post does not exist";
-            // };
-            // } catch (error) {
-            //     throw error;
-            // };
-        });
+            ;
+        }
+        ;
+        return "Post does not exist";
     }
-    ;
     // Create new post
     createNewPost() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -152,6 +136,22 @@ const post1 = new Post({
     body: "A summary of my Career Development in 2022",
     commentId: 1
 });
-const createNew = post1.createNewPost();
-const getNew = post1.getPost(1);
-console.log(getNew);
+// const createNew = post1.createNewPost();
+post1.writeData('./posts.txt', {
+    id: 1,
+    title: "My new post",
+    body: "A summary of my Career Development in 2022",
+    commentId: 1
+});
+post1.writeData('./posts.txt', {
+    id: 1,
+    title: "My second new post",
+    body: "A summary of my Career Development in 2022 Part Two",
+    commentId: 1
+});
+post1.readData('./posts.txt');
+// post1.updatePost(1, 
+//     {title: "My Latest Post", body: "This is my latest post"}
+//     )
+// const getNew = post1.getPost(1)
+// console.log(getNew)
