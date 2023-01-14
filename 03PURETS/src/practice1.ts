@@ -38,7 +38,7 @@ class Post {
     // Write data
     writeData (filename: string, details: PostInterface) {
         const newObj: string = JSON.stringify(details);
-        writeFile(filename, newObj, {flag: 'a'}, (err) => {
+        writeFile(filename, newObj, (err) => {
             if (err) throw err
         })
     };
@@ -66,11 +66,28 @@ class Post {
             };
             return "Post does not exist";
     };
+
+    convertDetailsToArray (details: PostInterface | PostInterface[]): PostInterface[] {
+        const data = this.readData('./posts.txt');
+        if (data) {
+            const newList = data.push(details)
+        }
+        const firstList: PostInterface[] | null = [data]
+        const newList = firstList.push(details)
+        // const newList = emptyList.push(oldData)
+        this.writeData('./posts.txt', newList)
+    }
         
     // Create new post
     createNewPost () {
-        this.writeData('./posts.txt', this.details);
-        return "Post uploaded successfully";
+        const uploaded = this.convertDetailsToArray(this.details);
+        if (uploaded) { 
+            return "Post uploaded successfully"
+        } else {
+            return "Could not upload post, check your "
+        }
+        // this.writeData('./posts.txt', this.details);
+        // return "Post uploaded successfully";
     };
 
     // Check if post exists

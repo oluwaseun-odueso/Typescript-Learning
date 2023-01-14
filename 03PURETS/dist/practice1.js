@@ -18,7 +18,7 @@ class Post {
     // Write data
     writeData(filename, details) {
         const newObj = JSON.stringify(details);
-        (0, fs_1.writeFile)(filename, newObj, { flag: 'a' }, (err) => {
+        (0, fs_1.writeFile)(filename, newObj, (err) => {
             if (err)
                 throw err;
         });
@@ -50,10 +50,27 @@ class Post {
         return "Post does not exist";
     }
     ;
+    convertDetailsToArray(details) {
+        const data = this.readData('./posts.txt');
+        if (data) {
+            const newList = data.push(details);
+        }
+        const firstList = [data];
+        const newList = firstList.push(details);
+        // const newList = emptyList.push(oldData)
+        this.writeData('./posts.txt', newList);
+    }
     // Create new post
     createNewPost() {
-        this.writeData('./posts.txt', this.details);
-        return "Post uploaded successfully";
+        const uploaded = this.convertDetailsToArray(this.details);
+        if (uploaded) {
+            return "Post uploaded successfully";
+        }
+        else {
+            return "Could not upload post, check your ";
+        }
+        // this.writeData('./posts.txt', this.details);
+        // return "Post uploaded successfully";
     }
     ;
     // Check if post exists
@@ -140,12 +157,12 @@ post1.writeData('./posts.txt', {
     body: "A summary of my Career Development in 2022",
     commentId: 1
 });
-// post1.writeData('./posts.txt', {
-//     id: 1,
-//     title: "My second new post",
-//     body: "A summary of my Career Development in 2022 Part Two",
-//     commentId: 1
-// });
+post1.writeData('./posts.txt', {
+    id: 1,
+    title: "My second new post",
+    body: "A summary of my Career Development in 2022 Part Two",
+    commentId: 1
+});
 post1.readData('./posts.txt');
 // post1.updatePost(1, 
 //     {title: "My Latest Post", body: "This is my latest post"}
