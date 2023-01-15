@@ -67,27 +67,27 @@ class Post {
             return "Post does not exist";
     };
 
-    convertDetailsToArray (details: PostInterface | PostInterface[]): PostInterface[] {
-        const data = this.readData('./posts.txt');
-        if (data) {
-            const newList = data.push(details)
-        }
-        const firstList: PostInterface[] | null = [data]
-        const newList = firstList.push(details)
-        // const newList = emptyList.push(oldData)
-        this.writeData('./posts.txt', newList)
-    }
+    // convertDetailsToArray (details: PostInterface | PostInterface[]): PostInterface[] {
+    //     const data = this.readData('./posts.txt');
+    //     if (data) {
+    //         const newList = data.push(details)
+    //     }
+    //     const firstList: PostInterface[] | null = [data]
+    //     const newList = firstList.push(details)
+    //     // const newList = emptyList.push(oldData)
+    //     this.writeData('./posts.txt', newList)
+    // }
         
     // Create new post
     createNewPost () {
-        const uploaded = this.convertDetailsToArray(this.details);
-        if (uploaded) { 
-            return "Post uploaded successfully"
-        } else {
-            return "Could not upload post, check your "
-        }
-        // this.writeData('./posts.txt', this.details);
-        // return "Post uploaded successfully";
+        // const uploaded = this.convertDetailsToArray(this.details);
+        // if (uploaded) { 
+        //     return "Post uploaded successfully"
+        // } else {
+        //     return "Could not upload post, check your "
+        // }
+        this.writeData('./posts.txt', this.details);
+        return "Post uploaded successfully";
     };
 
     // Check if post exists
