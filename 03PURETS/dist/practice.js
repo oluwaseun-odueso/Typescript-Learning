@@ -10,88 +10,39 @@ class Post {
     }
     ;
     // Write data
-    writeData(filename, details) {
-        const newObj = JSON.stringify(details);
-        (0, fs_1.writeFile)(filename, newObj, (err) => {
-            if (err)
-                throw err;
-        });
-    }
-    ;
-    // Read data
-    readData(filename) {
+    writeData(filename, newData) {
         (0, fs_1.readFile)(filename, 'utf8', (err, data) => {
             if (err)
                 throw err;
             const postData = JSON.parse(data);
-            console.log(postData);
-            return postData;
+            const list1 = [];
+            for (let i = 0; i < postData.length; i++) {
+                const element = postData[i];
+                list1.push(element);
+            }
+            // Update the list with the new data
+            list1.push(newData);
+            // Write data back to file
+            (0, fs_1.writeFile)(filename, JSON.stringify(list1), (err) => {
+                if (err)
+                    console.log(err);
+            });
         });
-    }
-    ;
-    // Get a post
-    getPost(id) {
-        const posts = this.readData('./posts.txt');
-        console.log('a');
-        console.log(posts);
-        for (let i = 0; i < posts.length; i++) {
-            if (id == posts[i].id) {
-                return (posts[i]);
-            }
-            ;
-        }
-        ;
-        return "Post does not exist";
-    }
-    ;
-    // Create new post
-    createNewPost(id = this.id, title = this.title, body = this.body, commentId) {
-        const currentData = this.readData('./posts.txt');
-        const newData = currentData.push({ id, title, body, commentId });
-        this.writeData('./posts.txt', newData);
-        return "Post uploaded successfully";
-    }
-    ;
-    // Check if post exists
-    confirmPostId(id) {
-        const posts = this.readData('./posts.txt');
-        for (let i = 0; i < posts.length; i++) {
-            if (id === posts[i].id) {
-                return true;
-            }
-            ;
-        }
-        return false;
-    }
-    ;
-    // Update a post
-    updatePost(id, title, body) {
-        const posts = this.readData('./posts.txt');
-        for (let i = 0; i < posts.length; i++) {
-            if (id === posts[i].id) {
-                posts[i].title = title;
-                posts[i].body = body;
-                this.writeData('./posts.txt', posts);
-                return "Post has been successfully updated";
-            }
-            ;
-        }
-        return "Post does not exist";
-    }
-    ;
-    // Delete a post
-    deletePost(id) {
-        const posts = this.readData('./posts.txt');
-        for (let i = 0; i < posts.length; i++) {
-            if (id === posts[i].id) {
-                posts.splice(i, 1);
-                this.writeData('./posts.txt', posts);
-                return "Post has been deleted";
-            }
-            ;
-        }
-        return "Post does not exist";
     }
     ;
 }
 ;
+const post1 = new Post(1, "This is my first post", "A review of my career growth in year 2022", 1);
+post1.writeData('./posts.txt', {
+    id: 3,
+    title: "My third new post",
+    body: "A summary of my Career Development in 2022 Part Three",
+    commentId: 3
+});
+// post1.writeData('./posts.txt', {
+//     id: 1,
+//     title: "My second new post",
+//     body: "A summary of my Career Development in 2022 Part Two",
+//     commentId: 1
+// });
+// console.log(post1.readData('./posts.txt'));
