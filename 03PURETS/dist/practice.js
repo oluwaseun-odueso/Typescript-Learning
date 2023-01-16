@@ -30,19 +30,27 @@ class Post {
         });
     }
     ;
+    // Get a post
+    // getPost (id: number) {
+    //     const posts = this.readData('./posts.txt');
+    //         console.log('a')
+    //         console.log(posts)
+    //         for (let i = 0; i < posts.length; i++) {
+    //             if (id == posts[i].id) {
+    //                 return (posts[i]);
+    //             };
+    //         };
+    //         return "Post does not exist";
+    // };
+    // Create new post
+    createNewPost(id = this.id, title = this.title, body = this.body, commentId) {
+        const newData = { id, title, body, commentId };
+        this.writeData('./posts.txt', newData);
+        return "Post uploaded successfully";
+    }
+    ;
 }
 ;
 const post1 = new Post(1, "This is my first post", "A review of my career growth in year 2022", 1);
-post1.writeData('./posts.txt', {
-    id: 3,
-    title: "My third new post",
-    body: "A summary of my Career Development in 2022 Part Three",
-    commentId: 3
-});
-// post1.writeData('./posts.txt', {
-//     id: 1,
-//     title: "My second new post",
-//     body: "A summary of my Career Development in 2022 Part Two",
-//     commentId: 1
-// });
-// console.log(post1.readData('./posts.txt'));
+const newPost = post1.createNewPost(5, "My Fifth new post", "A summary of my Career Part Five", 5);
+console.log(newPost);

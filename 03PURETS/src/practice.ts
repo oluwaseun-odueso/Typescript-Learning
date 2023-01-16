@@ -9,11 +9,12 @@ class Post {
     ) {};
     
     // Write data
-    writeData (filename: string, newData: {}) {
+    private writeData (filename: string, newData: {}) {
         readFile(filename, 'utf8', (err, data) => {
             if (err) throw err
-
+            
             const postData = JSON.parse(data);
+
             const list1 = []
             for(let i = 0; i < postData.length; i++) {
                 const element = postData[i]
@@ -43,13 +44,12 @@ class Post {
     //         return "Post does not exist";
     // };
 
-    // // Create new post
-    // createNewPost (id: number = this.id, title: string = this.title, body: string = this.body, commentId: number ) {
-    //     const currentData: {id: number, title: string, body: string, commentId: number}[] | null = this.readData('./posts.txt')
-    //     currentData.push({id, title, body, commentId})
-    //     this.writeData('./posts.txt', currentData);
-    //     return "Post uploaded successfully";        
-    // };
+    // Create new post
+    createNewPost (id: number = this.id, title: string = this.title, body: string = this.body, commentId?: number): string {
+        const newData = {id, title, body, commentId}
+        this.writeData('./posts.txt', newData)
+        return "Post uploaded successfully";        
+    };
 
     // Check if post exists
     // confirmPostId(id: number) {
@@ -89,18 +89,7 @@ class Post {
 
 const post1 = new Post (1, "This is my first post", "A review of my career growth in year 2022", 1);
 
-post1.writeData('./posts.txt', {
-    id: 3,
-    title: "My third new post",
-    body: "A summary of my Career Development in 2022 Part Three",
-    commentId: 3
-})
+const newPost = post1.createNewPost(5, "My Fifth new post", "A summary of my Career Part Five", 5);
 
-// post1.writeData('./posts.txt', {
-//     id: 1,
-//     title: "My second new post",
-//     body: "A summary of my Career Development in 2022 Part Two",
-//     commentId: 1
-// });
+console.log(newPost);
 
-// console.log(post1.readData('./posts.txt'));
