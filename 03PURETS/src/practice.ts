@@ -1,4 +1,5 @@
 import {readFile, writeFile} from 'fs'
+import { threadId } from 'worker_threads';
 
 class Post {
     constructor (
@@ -9,29 +10,45 @@ class Post {
     ) {};
     
     // Write data
-    private writeData (filename: string, newData: {}) {
+    writeData (filename: string, newData: {}) {
         readFile(filename, 'utf8', (err, data) => {
             if (err) throw err
             
             const postData = JSON.parse(data);
 
-            const list1 = []
-            for(let i = 0; i < postData.length; i++) {
-                const element = postData[i]
-                list1.push(element)
-            }
-
             // Update the list with the new data
-            list1.push(newData)
+            postData.push(newData)
 
             // Write data back to file
-            writeFile(filename, JSON.stringify(list1), (err) => {
+            writeFile(filename, JSON.stringify(postData), (err) => {
                 if (err) console.log(err);
             })
         });
     };
-    
-    // Get a post
+
+    // Read data
+    readData (filename: string): any {
+        readFile(filename, 'utf8', (error, data) => {
+            if (error) throw error;
+            const retrievedData = JSON.parse(data);
+            // console.log(retrievedData)
+            return retrievedData
+        })
+    }
+        
+    // const readData = (filename) => {
+    //     return new Promise((resolve, reject) => {
+    //         readFile(filename, 'utf8', (err, data) => {
+    //             if (err) throw err;
+
+    //             const a = JSON.parse(data);
+    //             resolve(a);
+    //             reject(new Error)
+    //         })  
+    //     })
+    // } 
+        
+    // // Get a post
     // getPost (id: number) {
     //     const posts = this.readData('./posts.txt');
     //         console.log('a')
@@ -89,7 +106,17 @@ class Post {
 
 const post1 = new Post (1, "This is my first post", "A review of my career growth in year 2022", 1);
 
-const newPost = post1.createNewPost(5, "My Fifth new post", "A summary of my Career Part Five", 5);
+post1.writeData('./posts.txt', {
+    id: 1,
+    title: "My new post",
+    body: "A summary of my Career Development in 2022",
+    commentId: 1
+});
 
-console.log(newPost);
+// const data = post1.readData('./posts.txt')
+
+// const newPost = post1.createNewPost(5, "My Fifth new post", "A summary of my Career Part Five", 5);
+
+// console.log(data);
+
 
