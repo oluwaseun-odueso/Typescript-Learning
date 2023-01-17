@@ -7,7 +7,6 @@ class Post {
         this.title = title;
         this.body = body;
         this.commentId = commentId;
-        this.foulWords = ["fuck", "shit", "pussy", "useless"];
     }
     ;
     // Write data
@@ -28,11 +27,6 @@ class Post {
     ;
     // Create new post
     createNewPost(id = this.id, title = this.title, body = this.body, commentId) {
-        // for (let i = 0; i < this.foulWords.length; i++) {
-        //     if (title.includes(this.foulWords[i]) || body.includes(this.foulWords[i]) ) {
-        //         return `Post title or body should not contain foul word + ${this.foulWords[i]}`
-        //     };
-        // };
         const newData = { id, title, body, commentId };
         this.writeData('./posts.txt', newData);
         return "Post uploaded successfully";
@@ -189,8 +183,29 @@ class Comment {
     ;
 }
 ;
-const comment1 = new Comment(1, 1, "Nice post, good job sir!");
-comment1.deleteComment(3);
+class Foul {
+    constructor(text) {
+        this.text = text;
+    }
+    checkForFoulLanguage() {
+        const foulWords = ["fuck", "shit", "idiot", "pussy", "useless"];
+        for (let i = 0; i < foulWords.length; i++) {
+            if (this.text.includes(foulWords[i])) {
+                return foulWords[i];
+                // return `Post title or body should not contain foul word + ${foulWords[i]}`
+            }
+            ;
+        }
+        ;
+        return false;
+    }
+    ;
+}
+;
+const checkForFoul = new Foul('An fuckieeee man');
+console.log(checkForFoul.checkForFoulLanguage());
+// const comment1 = new Comment(1, 1, "Nice post, good job sir!");
+// comment1.deleteComment(3)
 // comment1.updateComment(1, "Keep winning brother")
 // comment1.createNewComment(2, 1, "This really helped me. thanks a lot")
 // comment1.readComment(2)

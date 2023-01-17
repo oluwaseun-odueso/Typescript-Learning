@@ -1,7 +1,6 @@
 import {readFile, writeFile} from 'fs'
 
 class Post {
-    private foulWords: string[] = ["fuck", "shit", "pussy", "useless"]
     constructor (
         private readonly id: number,
         private title: string,
@@ -29,13 +28,6 @@ class Post {
 
     // Create new post
     createNewPost (id: number = this.id, title: string = this.title, body: string = this.body, commentId?: number): string {
-
-        // for (let i = 0; i < this.foulWords.length; i++) {
-        //     if (title.includes(this.foulWords[i]) || body.includes(this.foulWords[i]) ) {
-        //         return `Post title or body should not contain foul word + ${this.foulWords[i]}`
-        //     };
-        // };
-
         const newData = {id, title, body, commentId}
         this.writeData('./posts.txt', newData)
         return "Post uploaded successfully";        
@@ -184,8 +176,29 @@ class Comment {
     };
 };
 
-const comment1 = new Comment(1, 1, "Nice post, good job sir!");
-comment1.deleteComment(3)
+class Foul {
+    constructor (
+        private text: string
+    ) {}
+
+    checkForFoulLanguage () {
+        const foulWords: string[] = ["fuck", "shit", "idiot", "pussy", "useless"]
+
+        for (let i = 0; i < foulWords.length; i++) {
+            if ( this.text.includes(foulWords[i]) ) {
+                return foulWords[i]
+                // return `Post title or body should not contain foul word + ${foulWords[i]}`
+            };
+        };
+        return false;
+    };
+};
+
+const checkForFoul = new Foul('An fuckieeee man')
+console.log(checkForFoul.checkForFoulLanguage())
+
+// const comment1 = new Comment(1, 1, "Nice post, good job sir!");
+// comment1.deleteComment(3)
 
 // comment1.updateComment(1, "Keep winning brother")
 
