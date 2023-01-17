@@ -105,6 +105,7 @@ class Comment {
         private text: string
     ) {};
 
+    // Helper method to comment on post
     private writeComment (newData: {}) {
         readFile('./comments.txt', 'utf8', (err, data) => {
             if (err) throw err
@@ -121,13 +122,30 @@ class Comment {
         });
     };
 
-    // Create new comment
+    // Write new comment on post
     createNewComment (id: number = this.id, postId: number = this.postId, text: string = this.text): string {
         const newData = {id, postId, text}
         this.writeComment(newData)
         return "You have successfully commented on this post";        
     };
+
+    // Get/read comment
+    readComment (id: number): any {
+        readFile('./comments.txt', 'utf8', (error, data) => {
+            if (error) throw error;
+            const commentData = JSON.parse(data);
+
+            // Check for match
+            for (let i = 0; i < commentData.length; i++) {
+                if (id === commentData[i].id) {
+                    console.log(commentData[i]);
+                };
+            };
+        })
+    }
 };
 
 const comment1 = new Comment(1, 1, "Nice post, good job sir!");
-comment1.createNewComment(1, 1, "Nice post, good job sir!")
+// comment1.createNewComment(2, 1, "This really helped me. thanks a lot")
+
+comment1.readComment(2)
