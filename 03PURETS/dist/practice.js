@@ -99,16 +99,36 @@ class Post {
     ;
 }
 ;
-const post1 = new Post(1, "This is my first post", "A review of my career growth in year 2022", 1);
-post1.createNewPost(4, "My fourth new post idiot", "New post 4", 4);
-// post1.deletePost(4);
-// post1.updatePost(5, "My first post", "This is the first post")
-// post1.readPost(7)
-// const foulWords: string[] = ["fuck", "shit", "pussy", "useless"]
-// const newString: string = "Your brother is an idiot"
-// for (let i = 0; i < foulWords.length; i++) {
-//     if (newString.includes(foulWords[i])) {
-//         console.log(true) 
-//     } console.log(false)
-// }
-// console.log(newString.includes("fuck"))
+class Comment {
+    constructor(id, postId, text) {
+        this.id = id;
+        this.postId = postId;
+        this.text = text;
+    }
+    ;
+    writeComment(newData) {
+        (0, fs_1.readFile)('./comments.txt', 'utf8', (err, data) => {
+            if (err)
+                throw err;
+            const postData = JSON.parse(data);
+            // Update the list with the new data
+            postData.push(newData);
+            // Write data back to file
+            (0, fs_1.writeFile)('./comments.txt', JSON.stringify(postData), (err) => {
+                if (err)
+                    console.log(err);
+            });
+        });
+    }
+    ;
+    // Create new comment
+    createNewComment(id = this.id, postId = this.postId, text = this.text) {
+        const newData = { id, postId, text };
+        this.writeComment(newData);
+        return "You have successfully commented on this post";
+    }
+    ;
+}
+;
+const comment1 = new Comment(1, 1, "Nice post, good job sir!");
+comment1.createNewComment(1, 1, "Nice post, good job sir!");

@@ -10,7 +10,6 @@ class Post {
     ) {};
 
     
-    
     // Write data
     private writeData (filename: string, newData: {}) {
         readFile(filename, 'utf8', (err, data) => {
@@ -99,22 +98,36 @@ class Post {
 
 };
 
-const post1 = new Post (1, "This is my first post", "A review of my career growth in year 2022", 1);
+class Comment {
+    constructor (
+        private id: number, 
+        private postId: number, 
+        private text: string
+    ) {};
 
-post1.createNewPost(4, "My fourth new post idiot", "New post 4", 4)
+    private writeComment (newData: {}) {
+        readFile('./comments.txt', 'utf8', (err, data) => {
+            if (err) throw err
+            
+            const postData = JSON.parse(data);
 
-// post1.deletePost(4);
+            // Update the list with the new data
+            postData.push(newData)
 
-// post1.updatePost(5, "My first post", "This is the first post")
-// post1.readPost(7)
+            // Write data back to file
+            writeFile('./comments.txt', JSON.stringify(postData), (err) => {
+                if (err) console.log(err);
+            })
+        });
+    };
 
-// const foulWords: string[] = ["fuck", "shit", "pussy", "useless"]
+    // Create new comment
+    createNewComment (id: number = this.id, postId: number = this.postId, text: string = this.text): string {
+        const newData = {id, postId, text}
+        this.writeComment(newData)
+        return "You have successfully commented on this post";        
+    };
+};
 
-// const newString: string = "Your brother is an idiot"
-// for (let i = 0; i < foulWords.length; i++) {
-//     if (newString.includes(foulWords[i])) {
-//         console.log(true) 
-//     } console.log(false)
-// }
-
-// console.log(newString.includes("fuck"))
+const comment1 = new Comment(1, 1, "Nice post, good job sir!");
+comment1.createNewComment(1, 1, "Nice post, good job sir!")
