@@ -41,15 +41,15 @@ class Post {
 
             // Check for match
             for (let i = 0; i < postData.length; i++) {
-                if (id == postData[i].id) {
+                if (id === postData[i].id) {
                     console.log(postData[i]);
                 };
-            } console.log('Post does not exist')
+            };
         })
     }
        
     // Update a post
-    updatePostProcess(id: number, title: string, body: string) {
+    updatePost(id: number, title: string, body: string) {
         readFile('./posts.txt', 'utf8', (err, data) => {
             if (err) throw err
             const postData = JSON.parse(data);
@@ -59,41 +59,42 @@ class Post {
                 if (id === postData[i].id) {
                     postData[i].title = title;
                     postData[i].body = body
+                    console.log("Post has been updated successfully")
                 };
-            };
+            }; 
 
             writeFile('./posts.txt', JSON.stringify(postData), (err) => {
                 if (err) console.log(err);
-            })
-
-            // return "Post has been updated successfully"
-        }) 
-        // return "Could not update post"
+            });
+        });
     };
 
-    updatePost(id: number, title: string, body: string) {
-        this.updatePostProcess(id, title, body);
-        return "Post has been updated successfully"
-    }
-    
+    // Delete a post
+    deletePost(id: number) {
+        readFile('./posts.txt', 'utf8', (error, data) => {
+            if (error) throw error;
+            const postData = JSON.parse(data);
 
-//     // Delete a post
-//     deletePost(id: number) {
-//         const posts = this.readData('./posts.txt');
-//             for (let i = 0; i < posts.length; i++) {
-//                 if (id === posts[i].id) {
-//                     posts.splice(i, 1); 
-//                     this.writeData('./posts.txt', posts)
-//                     return "Post has been deleted"
-//                 };
-//             } return "Post does not exist";
-//     };
+            for (let i = 0; i < postData.length; i++) {
+                if (id === postData[i].id) {
+                    postData.splice(i, 1); 
+                    console.log("Post has been deleted successfully")
+                };
+            } 
+
+            writeFile('./posts.txt', JSON.stringify(postData), (err) => {
+                if (err) console.log(err);
+            });       
+        });
+    };
+
 };
 
 const post1 = new Post (1, "This is my first post", "A review of my career growth in year 2022", 1);
 
-const data = post1.updatePost(1, "New Post", "This is the new post")
+// post1.createNewPost(4, "My fourth new post", "New post 4", 4)
 
-// post1.readPost(6)
+post1.deletePost(4);
 
-console.log(data);
+// post1.updatePost(5, "My first post", "This is the first post")
+// post1.readPost(7)
