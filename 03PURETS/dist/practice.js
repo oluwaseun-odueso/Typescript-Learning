@@ -63,7 +63,7 @@ class Post {
         const checkFoulLanguageInTitle = new Foul(title).checkForFoulLanguage();
         const checkFoulLanguageInBody = new Foul(body).checkForFoulLanguage();
         if (checkFoulLanguageInTitle || checkFoulLanguageInBody) {
-            console.log("Cannot update post, please do not use the following words: fuck, shit, idiot, pussy, useless");
+            console.log("Cannot update post, please do not use the following words: bitch, fuck, shit, idiot, pussy, useless");
             return;
         }
         (0, fs_1.readFile)('./posts.txt', 'utf8', (err, data) => {
@@ -165,6 +165,11 @@ class Comment {
     }
     // Update a comment
     updateComment(id, text) {
+        const checkFoulLanguageInText = new Foul(text).checkForFoulLanguage();
+        if (checkFoulLanguageInText) {
+            console.log("Cannot update comment, please do not use the following words: bitch, fuck, shit, idiot, pussy, useless");
+            return;
+        }
         (0, fs_1.readFile)('./comments.txt', 'utf8', (err, data) => {
             if (err)
                 throw err;
@@ -212,7 +217,7 @@ class Foul {
         this.text = text;
     }
     checkForFoulLanguage() {
-        const foulWords = ["fuck", "shit", "idiot", "pussy", "useless"];
+        const foulWords = ["bitch", "fuck", "shit", "idiot", "pussy", "useless"];
         for (let i = 0; i < foulWords.length; i++) {
             if (this.text.includes(foulWords[i])) {
                 return foulWords[i];
@@ -226,15 +231,15 @@ class Foul {
     ;
 }
 ;
-const post1 = new Post(8, "My eight post", "This is my eight good post");
-post1.updatePost(8, "My eight big post", "This is my eight good post");
+// const post1 = new Post(8, "My eight post", "This is my eight good post")
+// post1.updatePost(8, "My eight big post", "This is my eight good post")
 // const newPost = post1.createNewPost()
 // console.log(newPost)
 // const checkForFoul = new Foul('An fuckieeee man')
 // console.log(checkForFoul.checkForFoulLanguage())
-// const comment1 = new Comment(2, 1, "Nice post, good job sir!");
+const comment1 = new Comment(2, 1, "Nice post, good job sir!");
 // const newComment = comment1.createNewComment()
 // console.log(newComment);
 // comment1.deleteComment(3)
-// comment1.updateComment(1, "Keep winning brother")
+comment1.updateComment(1, "Keep winning big brother");
 // comment1.readComment(2)
