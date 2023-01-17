@@ -28,10 +28,10 @@ class Post {
 
     // Create new post
     createNewPost (): string {
-        const foulLanguageInTitle = new Foul(this.title).checkForFoulLanguage();
-        const foulLanguageInBody = new Foul(this.body).checkForFoulLanguage()
+        const checkFoulLanguageInTitle = new Foul(this.title).checkForFoulLanguage();
+        const checkFoulLanguageInBody = new Foul(this.body).checkForFoulLanguage()
 
-        if (foulLanguageInTitle || foulLanguageInBody) {
+        if (checkFoulLanguageInTitle || checkFoulLanguageInBody) {
             return "Cannot create post, please do not use the following words: fuck, shit, idiot, pussy, useless"
         }
 
@@ -127,8 +127,18 @@ class Comment {
     };
 
     // Write new comment on post
-    createNewComment (id: number = this.id, postId: number = this.postId, text: string = this.text): string {
-        const newData = {id, postId, text}
+    createNewComment (): string {
+        const checkFoulLanguageInText = new Foul(this.text).checkForFoulLanguage();
+
+        if (checkFoulLanguageInText) {
+            return "Cannot create post, please do not use the following words: fuck, shit, idiot, pussy, useless"
+        }
+
+        const newData = {
+            id: this.id, 
+            postId: this.postId, 
+            text: this.text
+        }
         this.writeComment(newData)
         return "You have successfully commented on post";        
     };
@@ -206,7 +216,7 @@ class Foul {
     };
 };
 
-const post1 = new Post(7, "My seventh post", "This is my seventh good post", 5)
+const post1 = new Post(8, "My eight post", "This is my eight good post")
 
 const newPost = post1.createNewPost()
 
@@ -215,10 +225,14 @@ console.log(newPost)
 // const checkForFoul = new Foul('An fuckieeee man')
 // console.log(checkForFoul.checkForFoulLanguage())
 
-// const comment1 = new Comment(1, 1, "Nice post, good job sir!");
+// const comment1 = new Comment(2, 1, "Nice post, good job sir!");
+
+// const newComment = comment1.createNewComment()
+
+// console.log(newComment);
+
 // comment1.deleteComment(3)
 
 // comment1.updateComment(1, "Keep winning brother")
 
-// comment1.createNewComment(2, 1, "This really helped me. thanks a lot")
 // comment1.readComment(2)
