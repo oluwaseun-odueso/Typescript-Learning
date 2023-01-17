@@ -143,9 +143,30 @@ class Comment {
             };
         })
     }
+    
+    // Update a comment
+    updateComment(id: number, text: string) {
+        readFile('./comments.txt', 'utf8', (err, data) => {
+            if (err) throw err
+            const commentData = JSON.parse(data);
+
+            // Check for match and update
+            for (let i = 0; i < commentData.length; i++) {
+                if (id === commentData[i].id) {
+                    commentData[i].text = text;
+                    console.log("Comment has been updated successfully");
+                };
+            }; 
+
+            writeFile('./comments.txt', JSON.stringify(commentData), (err) => {
+                if (err) console.log(err);
+            });
+        });
+    };
 };
 
 const comment1 = new Comment(1, 1, "Nice post, good job sir!");
-// comment1.createNewComment(2, 1, "This really helped me. thanks a lot")
+comment1.updateComment(1, "Keep winning brother")
 
-comment1.readComment(2)
+// comment1.createNewComment(2, 1, "This really helped me. thanks a lot")
+// comment1.readComment(2)

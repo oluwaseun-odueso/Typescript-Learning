@@ -1,1 +1,1 @@
-[{"id":1,"postId":1,"text":"Nice post, good job sir!"},{"id":2,"postId":1,"text":"This really helped me. thanks a lot"}]
+[{"id":1,"postId":1,"text":"Keep winning brother"},{"id":2,"postId":1,"text":"This really helped me. thanks a lot"}]
