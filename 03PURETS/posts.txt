@@ -1,1 +1,1 @@
-[{"id":1,"title":"My first post","body":"This is the first post","commentId":1},{"id":2,"title":"My second new post","body":"A summary of my career development in 2023"},{"id":3,"title":"My third new post","body":"New post 3","commentId":3}]
+[{"id":1,"title":"My first post","body":"This is the first post","commentId":1},{"id":2,"title":"My second new post","body":"A summary of my career development in 2023"},{"id":3,"title":"My third new post","body":"New post 3","commentId":3},{"id":4,"title":"My fourth new post idiot","body":"New post 4","commentId":4}]

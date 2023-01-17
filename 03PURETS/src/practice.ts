@@ -1,13 +1,15 @@
 import {readFile, writeFile} from 'fs'
-import { threadId } from 'worker_threads';
 
 class Post {
+    private foulWords: string[] = ["fuck", "shit", "pussy", "useless"]
     constructor (
         private readonly id: number,
         private title: string,
         private body: string,
         private commentId?: number
     ) {};
+
+    
     
     // Write data
     private writeData (filename: string, newData: {}) {
@@ -28,6 +30,13 @@ class Post {
 
     // Create new post
     createNewPost (id: number = this.id, title: string = this.title, body: string = this.body, commentId?: number): string {
+
+        // for (let i = 0; i < this.foulWords.length; i++) {
+        //     if (title.includes(this.foulWords[i]) || body.includes(this.foulWords[i]) ) {
+        //         return `Post title or body should not contain foul word + ${this.foulWords[i]}`
+        //     };
+        // };
+
         const newData = {id, title, body, commentId}
         this.writeData('./posts.txt', newData)
         return "Post uploaded successfully";        
@@ -92,9 +101,20 @@ class Post {
 
 const post1 = new Post (1, "This is my first post", "A review of my career growth in year 2022", 1);
 
-// post1.createNewPost(4, "My fourth new post", "New post 4", 4)
+post1.createNewPost(4, "My fourth new post idiot", "New post 4", 4)
 
-post1.deletePost(4);
+// post1.deletePost(4);
 
 // post1.updatePost(5, "My first post", "This is the first post")
 // post1.readPost(7)
+
+// const foulWords: string[] = ["fuck", "shit", "pussy", "useless"]
+
+// const newString: string = "Your brother is an idiot"
+// for (let i = 0; i < foulWords.length; i++) {
+//     if (newString.includes(foulWords[i])) {
+//         console.log(true) 
+//     } console.log(false)
+// }
+
+// console.log(newString.includes("fuck"))
