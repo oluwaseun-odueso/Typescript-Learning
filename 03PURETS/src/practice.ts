@@ -126,7 +126,7 @@ class Comment {
     createNewComment (id: number = this.id, postId: number = this.postId, text: string = this.text): string {
         const newData = {id, postId, text}
         this.writeComment(newData)
-        return "You have successfully commented on this post";        
+        return "You have successfully commented on post";        
     };
 
     // Get/read comment
@@ -163,10 +163,31 @@ class Comment {
             });
         });
     };
+
+    // Delete a comment
+    deleteComment(id: number) {
+        readFile('./comments.txt', 'utf8', (error, data) => {
+            if (error) throw error;
+            const commentData = JSON.parse(data);
+
+            for (let i = 0; i < commentData.length; i++) {
+                if (id === commentData[i].id) {
+                    commentData.splice(i, 1); 
+                    console.log("Comment has been deleted successfully")
+                };
+            } 
+
+            writeFile('./comments.txt', JSON.stringify(commentData), (err) => {
+                if (err) console.log(err);
+            });       
+        });
+    };
 };
 
 const comment1 = new Comment(1, 1, "Nice post, good job sir!");
-comment1.updateComment(1, "Keep winning brother")
+comment1.deleteComment(3)
+
+// comment1.updateComment(1, "Keep winning brother")
 
 // comment1.createNewComment(2, 1, "This really helped me. thanks a lot")
 // comment1.readComment(2)
