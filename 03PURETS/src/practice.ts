@@ -10,7 +10,7 @@ class Post {
     ) {};
     
     // Write data
-    writeData (filename: string, newData: {}) {
+    private writeData (filename: string, newData: {}) {
         readFile(filename, 'utf8', (err, data) => {
             if (err) throw err
             
@@ -26,31 +26,30 @@ class Post {
         });
     };
 
+    // Create new post
+    createNewPost (id: number = this.id, title: string = this.title, body: string = this.body, commentId?: number): string {
+        const newData = {id, title, body, commentId}
+        this.writeData('./posts.txt', newData)
+        return "Post uploaded successfully";        
+    };
+
     // Read data
-    readData (filename: string): any {
+    readPost (id: number, filename: string): any {
         readFile(filename, 'utf8', (error, data) => {
             if (error) throw error;
             const retrievedData = JSON.parse(data);
-            // console.log(retrievedData)
-            return retrievedData
+
+            for (let i = 0; i < retrievedData.length; i++) {
+                if (id == retrievedData[i].id) {
+                    console.log(retrievedData[i]);
+                };
+            };
         })
     }
         
-    // const readData = (filename) => {
-    //     return new Promise((resolve, reject) => {
-    //         readFile(filename, 'utf8', (err, data) => {
-    //             if (err) throw err;
-
-    //             const a = JSON.parse(data);
-    //             resolve(a);
-    //             reject(new Error)
-    //         })  
-    //     })
-    // } 
-        
-    // // Get a post
+    // Get a post
     // getPost (id: number) {
-    //     const posts = this.readData('./posts.txt');
+    //     const posts = this.readData(id, './posts.txt');
     //         console.log('a')
     //         console.log(posts)
     //         for (let i = 0; i < posts.length; i++) {
@@ -59,23 +58,6 @@ class Post {
     //             };
     //         };
     //         return "Post does not exist";
-    // };
-
-    // Create new post
-    createNewPost (id: number = this.id, title: string = this.title, body: string = this.body, commentId?: number): string {
-        const newData = {id, title, body, commentId}
-        this.writeData('./posts.txt', newData)
-        return "Post uploaded successfully";        
-    };
-
-    // Check if post exists
-    // confirmPostId(id: number) {
-    //     const posts = this.readData('./posts.txt');
-    //         for (let i = 0; i < posts.length; i++) {
-    //             if (id === posts[i].id) {
-    //                 return true;
-    //             };
-    //         } return false;
     // };
     
     // // Update a post
@@ -106,17 +88,6 @@ class Post {
 
 const post1 = new Post (1, "This is my first post", "A review of my career growth in year 2022", 1);
 
-post1.writeData('./posts.txt', {
-    id: 1,
-    title: "My new post",
-    body: "A summary of my Career Development in 2022",
-    commentId: 1
-});
-
-// const data = post1.readData('./posts.txt')
-
-// const newPost = post1.createNewPost(5, "My Fifth new post", "A summary of my Career Part Five", 5);
+post1.readPost(3, './posts.txt')
 
 // console.log(data);
-
-

@@ -25,38 +25,6 @@ class Post {
         });
     }
     ;
-    // Read data
-    readData(filename) {
-        (0, fs_1.readFile)(filename, 'utf8', (error, data) => {
-            if (error)
-                throw error;
-            const retrievedData = JSON.parse(data);
-            // console.log(retrievedData)
-            return retrievedData;
-        });
-    }
-    // const readData = (filename) => {
-    //     return new Promise((resolve, reject) => {
-    //         readFile(filename, 'utf8', (err, data) => {
-    //             if (err) throw err;
-    //             const a = JSON.parse(data);
-    //             resolve(a);
-    //             reject(new Error)
-    //         })  
-    //     })
-    // } 
-    // // Get a post
-    // getPost (id: number) {
-    //     const posts = this.readData('./posts.txt');
-    //         console.log('a')
-    //         console.log(posts)
-    //         for (let i = 0; i < posts.length; i++) {
-    //             if (id == posts[i].id) {
-    //                 return (posts[i]);
-    //             };
-    //         };
-    //         return "Post does not exist";
-    // };
     // Create new post
     createNewPost(id = this.id, title = this.title, body = this.body, commentId) {
         const newData = { id, title, body, commentId };
@@ -64,15 +32,23 @@ class Post {
         return "Post uploaded successfully";
     }
     ;
+    // Read data
+    readPost(id, filename) {
+        (0, fs_1.readFile)(filename, 'utf8', (error, data) => {
+            if (error)
+                throw error;
+            const retrievedData = JSON.parse(data);
+            for (let i = 0; i < retrievedData.length; i++) {
+                if (id == retrievedData[i].id) {
+                    console.log(retrievedData[i]);
+                }
+                ;
+            }
+            ;
+        });
+    }
 }
 ;
 const post1 = new Post(1, "This is my first post", "A review of my career growth in year 2022", 1);
-post1.writeData('./posts.txt', {
-    id: 1,
-    title: "My new post",
-    body: "A summary of my Career Development in 2022",
-    commentId: 1
-});
-// const data = post1.readData('./posts.txt')
-// const newPost = post1.createNewPost(5, "My Fifth new post", "A summary of my Career Part Five", 5);
+post1.readPost(3, './posts.txt');
 // console.log(data);
