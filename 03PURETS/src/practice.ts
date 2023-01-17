@@ -27,8 +27,20 @@ class Post {
     };
 
     // Create new post
-    createNewPost (id: number = this.id, title: string = this.title, body: string = this.body, commentId?: number): string {
-        const newData = {id, title, body, commentId}
+    createNewPost (): string {
+        const foulLanguageInTitle = new Foul(this.title).checkForFoulLanguage();
+        const foulLanguageInBody = new Foul(this.body).checkForFoulLanguage()
+
+        if (foulLanguageInTitle || foulLanguageInBody) {
+            return "Cannot create post, please do not use the following words: fuck, shit, idiot, pussy, useless"
+        }
+
+        const newData = {
+            id: this.id, 
+            title: this.title, 
+            body: this.body, 
+            commentId: this.commentId
+        }
         this.writeData('./posts.txt', newData)
         return "Post uploaded successfully";        
     };
@@ -194,8 +206,14 @@ class Foul {
     };
 };
 
-const checkForFoul = new Foul('An fuckieeee man')
-console.log(checkForFoul.checkForFoulLanguage())
+const post1 = new Post(7, "My seventh post", "This is my seventh good post", 5)
+
+const newPost = post1.createNewPost()
+
+console.log(newPost)
+
+// const checkForFoul = new Foul('An fuckieeee man')
+// console.log(checkForFoul.checkForFoulLanguage())
 
 // const comment1 = new Comment(1, 1, "Nice post, good job sir!");
 // comment1.deleteComment(3)
