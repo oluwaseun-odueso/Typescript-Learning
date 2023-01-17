@@ -33,22 +33,52 @@ class Post {
     }
     ;
     // Read data
-    readPost(id, filename) {
-        (0, fs_1.readFile)(filename, 'utf8', (error, data) => {
+    readPost(id) {
+        (0, fs_1.readFile)('./posts.txt', 'utf8', (error, data) => {
             if (error)
                 throw error;
-            const retrievedData = JSON.parse(data);
-            for (let i = 0; i < retrievedData.length; i++) {
-                if (id == retrievedData[i].id) {
-                    console.log(retrievedData[i]);
+            const postData = JSON.parse(data);
+            // Check for match
+            for (let i = 0; i < postData.length; i++) {
+                if (id == postData[i].id) {
+                    console.log(postData[i]);
+                }
+                ;
+            }
+            console.log('Post does not exist');
+        });
+    }
+    // Update a post
+    updatePostProcess(id, title, body) {
+        (0, fs_1.readFile)('./posts.txt', 'utf8', (err, data) => {
+            if (err)
+                throw err;
+            const postData = JSON.parse(data);
+            // Check for match and update
+            for (let i = 0; i < postData.length; i++) {
+                if (id === postData[i].id) {
+                    postData[i].title = title;
+                    postData[i].body = body;
                 }
                 ;
             }
             ;
+            (0, fs_1.writeFile)('./posts.txt', JSON.stringify(postData), (err) => {
+                if (err)
+                    console.log(err);
+            });
+            // return "Post has been updated successfully"
         });
+        // return "Could not update post"
+    }
+    ;
+    updatePost(id, title, body) {
+        this.updatePostProcess(id, title, body);
+        return "Post has been updated successfully";
     }
 }
 ;
 const post1 = new Post(1, "This is my first post", "A review of my career growth in year 2022", 1);
-post1.readPost(3, './posts.txt');
-// console.log(data);
+const data = post1.updatePost(1, "New Post", "This is the new post");
+// post1.readPost(6)
+console.log(data);

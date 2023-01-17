@@ -34,44 +34,48 @@ class Post {
     };
 
     // Read data
-    readPost (id: number, filename: string): any {
-        readFile(filename, 'utf8', (error, data) => {
+    readPost (id: number): any {
+        readFile('./posts.txt', 'utf8', (error, data) => {
             if (error) throw error;
-            const retrievedData = JSON.parse(data);
+            const postData = JSON.parse(data);
 
-            for (let i = 0; i < retrievedData.length; i++) {
-                if (id == retrievedData[i].id) {
-                    console.log(retrievedData[i]);
+            // Check for match
+            for (let i = 0; i < postData.length; i++) {
+                if (id == postData[i].id) {
+                    console.log(postData[i]);
                 };
-            };
+            } console.log('Post does not exist')
         })
     }
-        
-    // Get a post
-    // getPost (id: number) {
-    //     const posts = this.readData(id, './posts.txt');
-    //         console.log('a')
-    //         console.log(posts)
-    //         for (let i = 0; i < posts.length; i++) {
-    //             if (id == posts[i].id) {
-    //                 return (posts[i]);
-    //             };
-    //         };
-    //         return "Post does not exist";
-    // };
+       
+    // Update a post
+    updatePostProcess(id: number, title: string, body: string) {
+        readFile('./posts.txt', 'utf8', (err, data) => {
+            if (err) throw err
+            const postData = JSON.parse(data);
+
+            // Check for match and update
+            for (let i = 0; i < postData.length; i++) {
+                if (id === postData[i].id) {
+                    postData[i].title = title;
+                    postData[i].body = body
+                };
+            };
+
+            writeFile('./posts.txt', JSON.stringify(postData), (err) => {
+                if (err) console.log(err);
+            })
+
+            // return "Post has been updated successfully"
+        }) 
+        // return "Could not update post"
+    };
+
+    updatePost(id: number, title: string, body: string) {
+        this.updatePostProcess(id, title, body);
+        return "Post has been updated successfully"
+    }
     
-    // // Update a post
-    // updatePost(id: number, title: string, body: string) {
-    //     const posts = this.readData('./posts.txt');
-    //         for (let i = 0; i < posts.length; i++) {
-    //             if (id === posts[i].id) {
-    //                 posts[i].title = title;
-    //                 posts[i].body = body
-    //                 this.writeData('./posts.txt', posts)
-    //                 return "Post has been successfully updated"
-    //             };
-    //         } return "Post does not exist";
-    // };
 
 //     // Delete a post
 //     deletePost(id: number) {
@@ -88,6 +92,8 @@ class Post {
 
 const post1 = new Post (1, "This is my first post", "A review of my career growth in year 2022", 1);
 
-post1.readPost(3, './posts.txt')
+const data = post1.updatePost(1, "New Post", "This is the new post")
 
-// console.log(data);
+// post1.readPost(6)
+
+console.log(data);
