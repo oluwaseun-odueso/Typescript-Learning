@@ -62,6 +62,14 @@ class Post {
        
     // Update a post
     updatePost(id: number, title: string, body: string) {
+        const checkFoulLanguageInTitle = new Foul(title).checkForFoulLanguage();
+        const checkFoulLanguageInBody = new Foul(body).checkForFoulLanguage()
+
+        if (checkFoulLanguageInTitle || checkFoulLanguageInBody) {
+            console.log("Cannot update post, please do not use the following words: fuck, shit, idiot, pussy, useless")
+            return
+        }
+
         readFile('./posts.txt', 'utf8', (err, data) => {
             if (err) throw err
             const postData = JSON.parse(data);
@@ -218,9 +226,11 @@ class Foul {
 
 const post1 = new Post(8, "My eight post", "This is my eight good post")
 
-const newPost = post1.createNewPost()
+post1.updatePost(8, "My eight big post", "This is my eight good post")
 
-console.log(newPost)
+// const newPost = post1.createNewPost()
+
+// console.log(newPost)
 
 // const checkForFoul = new Foul('An fuckieeee man')
 // console.log(checkForFoul.checkForFoulLanguage())

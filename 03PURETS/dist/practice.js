@@ -60,6 +60,12 @@ class Post {
     }
     // Update a post
     updatePost(id, title, body) {
+        const checkFoulLanguageInTitle = new Foul(title).checkForFoulLanguage();
+        const checkFoulLanguageInBody = new Foul(body).checkForFoulLanguage();
+        if (checkFoulLanguageInTitle || checkFoulLanguageInBody) {
+            console.log("Cannot update post, please do not use the following words: fuck, shit, idiot, pussy, useless");
+            return;
+        }
         (0, fs_1.readFile)('./posts.txt', 'utf8', (err, data) => {
             if (err)
                 throw err;
@@ -221,8 +227,9 @@ class Foul {
 }
 ;
 const post1 = new Post(8, "My eight post", "This is my eight good post");
-const newPost = post1.createNewPost();
-console.log(newPost);
+post1.updatePost(8, "My eight big post", "This is my eight good post");
+// const newPost = post1.createNewPost()
+// console.log(newPost)
 // const checkForFoul = new Foul('An fuckieeee man')
 // console.log(checkForFoul.checkForFoulLanguage())
 // const comment1 = new Comment(2, 1, "Nice post, good job sir!");
